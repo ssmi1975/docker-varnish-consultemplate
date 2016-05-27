@@ -20,8 +20,9 @@ RUN \
     apt-get -qq update && \
     apt-get install -y varnish
 
-ADD https://github.com/hashicorp/consul-template/releases/download/v0.9.0/consul-template_0.9.0_linux_amd64.tar.gz /usr/local/src/
-RUN tar -C /usr/local/bin --strip-components 1 -zxf /usr/local/src/consul-template_0.9.0_linux_amd64.tar.gz
+RUN apt-get install -y unzip
+ADD https://releases.hashicorp.com/consul-template/0.14.0/consul-template_0.14.0_linux_amd64.zip /usr/local/src/
+RUN unzip /usr/local/src/consul-template_0.14.0_linux_amd64.zip -d /usr/local/bin
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY varnish-default.ctmpl /tmp/varnish-default.ctmpl
