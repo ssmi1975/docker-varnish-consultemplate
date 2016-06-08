@@ -17,8 +17,10 @@ RUN yum -y install supervisor \
 	&& rm /tmp/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip \
 	&& sed -i 's/nodaemon=false/nodaemon=true/g' /etc/supervisord.conf
  
-COPY supervisord.conf /etc/supervisord.d/varnish.ini
-COPY varnish-default.ctmpl /tmp/varnish-default.ctmpl
+COPY supervisor/varnish.ini /etc/supervisord.d/varnish.ini
+COPY supervisor/consul-template.ini /etc/supervisord.d/consul-template.ini
+
+COPY varnish-default.ctmpl /etc/varnish/consul.ctmpl
 
 EXPOSE 80
 EXPOSE 6082
