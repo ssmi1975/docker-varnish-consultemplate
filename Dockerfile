@@ -14,12 +14,12 @@ RUN    yum -y install epel-release \
 	&& yum -y install varnish \
 	&& yum clean all
 
-RUN sed -i 's/^\(\[supervisord\]\)$/\1\nnodaemon=true/' /etc/supervisord.conf
+RUN sed -i 's/nodaemon=false/nodaemon=true/g' /etc/supervisord.conf
 
 ADD https://releases.hashicorp.com/consul-template/${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip /tmp
 RUN unzip /tmp/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip -d /usr/local/bin && rm /tmp/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip
 
-COPY supervisord.conf /etc/supervisord.d/varnish.conf
+COPY supervisord.conf /etc/supervisord.d/varnish.ini
 COPY varnish-default.ctmpl /tmp/varnish-default.ctmpl
 
 EXPOSE 80
